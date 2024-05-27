@@ -1,0 +1,11 @@
+SELECT * FROM public."Person";
+
+insert into "Person" values (1, 'Pasha', 'Sokolov', 18, 123456789);
+insert into "Person" values (2, 'Dima', 'Ivanov', 65, 987654321);
+insert into "Person" values (3, 'Egor', 'Petrov', 3, 456789123);
+insert into "Person" values (4, 'Alex', 'Sidorov', 23, 456123789);
+insert into "Person" values (5, 'Kirill', 'Palianitsa', 99, 11111111);
+
+update "Person" set name='Igor', age=49 where id=3;
+
+delete from "Person" where age>50
