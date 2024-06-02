@@ -1,0 +1,53 @@
+create table "Employees"
+(
+employee_id integer,
+first_name varchar(20),
+last_name varchar(25) not null,
+email varchar(25) not null unique,
+phone_number varchar(20),
+hire_date date not null,
+salary numeric(8, 2),
+commission_pct numeric(2, 2),
+department_id integer
+);
+
+SELECT * FROM public."Employees"
+
+insert into "Employees" VALUES (1, 'Name1', 'Surname1', 'name_surname1@gmail.com', '8029 111.11.11', '01.05.2024', 1000, 0.1, 10);
+insert into "Employees" values (2, 'Name2', 'Surname2', 'name_surname2@gmail.com', '8029 222.22.22', '01.05.2024', 2000, 0.9, 50);
+insert into "Employees" values (3, 'Name3', 'Surname3', 'name_surname3@gmail.com', '8029 333.33.33', '01.05.2024', 1100, 0.5, 50);
+insert into "Employees" values (4, 'Name4a', 'Surname4', 'name_surname4@gmail.com', '8029 444.44.44', '01.05.2024', 2100, 0.1, 30);
+insert into "Employees" values (5, 'Name555555', 'Surname5', 'name_surname5@gmail.com', '8029 555.55.55', '01.05.2024', 4500, 0.0, 50);
+insert into "Employees" values (6, 'Nama6', 'Surname6', 'name_surname6@gmail.com', '8029 666.66.66', '01.05.2024', 1010, 0.3, 80);
+insert into "Employees" values (7, 'Name7', 'Surname7', 'name_surname7@gmail.com', '8029 777.77.77', '01.05.2024', 1010, 0.4, 80);
+insert into "Employees" values (8, 'Name8', 'Surname8', 'name_surname8@gmail.com', '8029 888.88.88', '01.05.2024', 1010, 0.6, 80);
+insert into "Employees" values (9, 'Name9a', 'Surname9', 'name_surname9@gmail.com', '8029 999.99.99', '01.05.2024', 1500, 0.1, 80);
+insert into "Employees" values (10, 'Name10', 'Surname10', 'name_surname10@gmail.com', '8029 123.45.67', '01.05.2024', 8200, 0.1, 10);
+
+SELECT` * FROM "Employees"
+where department_id=50 and salary>4000;
+
+SELECT * FROM "Employees"
+where first_name like '%a';
+	
+SELECT * FROM "Employees"
+where (department_id = 50 or department_id = 80) and commission_pct is NOT NULL;
+	
+SELECT * FROM "Employees"
+where salary>=8000 and salary<=9000;
+	
+SELECT employee_id,
+       first_name,
+       last_name,
+       email,
+       REPLACE(phone_number, '.', '-') AS phone_number,
+       hire_date,
+       salary,
+       commission_pct,
+       department_id
+FROM "Employees";
+SELECT department_id, salary, count(*) FROM "Employees"
+group by department_id, salary;
+	
+SELECT * FROM "Employees"
+where length(first_name) = (select MAX(length(first_name)) FROM "Employees");
