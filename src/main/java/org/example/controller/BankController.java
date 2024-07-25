@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.model.Customer;
 import org.example.model.PaymentCard;
 import org.example.repository.CustomerRepository;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@Tag(name = "Bank controller",
+        description = "Contains methods for creating and getting clients, payment cards, and transfers between them.")
 @RestController
 @RequestMapping("/api")
 public class BankController {
@@ -21,30 +25,35 @@ public class BankController {
     @Autowired
     private PaymentCardRepository paymentCardRepository;
 
+    @Operation(summary = "Getting client by id")
     @GetMapping("/customer/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Creating a new client")
     @PostMapping("/customer")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Getting card by id")
     @GetMapping("/payment-card/{id}")
     public ResponseEntity<PaymentCard> getPaymentCard(@PathVariable Long id) {
         Optional<PaymentCard> paymentCard = paymentCardRepository.findById(id);
         return paymentCard.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Creating a new card")
     @PostMapping("/payment-card")
     public ResponseEntity<PaymentCard> createPaymentCard(@RequestBody PaymentCard paymentCard) {
         PaymentCard savedPaymentCard = paymentCardRepository.save(paymentCard);
         return new ResponseEntity<>(savedPaymentCard, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Do a transfer between clients")
     @PostMapping("/transfer")
     public ResponseEntity<String> transfer(@RequestParam Long fromCardId, @RequestParam Long toCardId, @RequestParam double amount) {
         Optional<PaymentCard> fromCardOpt = paymentCardRepository.findById(fromCardId);
